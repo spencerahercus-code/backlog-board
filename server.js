@@ -15,10 +15,21 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Set up Google Sheets connection
-const auth = new google.auth.GoogleAuth({
-  keyFile: process.env.GOOGLE_CREDENTIALS_PATH,
-  scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-});
+let auth;
+if (process.env.GOOGLE_CREDENTIALS_JSON) {
+  // For production (Render) - credentials from environment variable
+  const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
+  auth = new google.auth.GoogleAuth({
+    credentials,
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  });
+} else {
+  // For local development - credentials from file
+  auth = new google.auth.GoogleAuth({
+    keyFile: process.env.GOOGLE_CREDENTIALS_PATH,
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  });
+}
 const sheets = google.sheets({ version: 'v4', auth });
 const SPREADSHEET_ID = process.env.GOOGLE_SPREADSHEET_ID;
 const SHEET_NAME = 'Sheet1';

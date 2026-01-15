@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Backlog Board</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Backlog Board</h1>
+    <div class="header-actions">
+      <button id="toggleView" class="btn">Switch to Table View</button>
+      <button id="openForm" class="btn btn-primary">+ New Item</button>
+    </div>
+  </header>
+
+  <!-- Modal Form for Adding Items -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Add New Item</h2>
+      <form id="itemForm">
+        <div class="form-group">
+          <label for="project">Project Name *</label>
+          <input type="text" id="project" name="project" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="3"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="dueDate">Due Date</label>
+            <input type="date" id="dueDate" name="dueDate">
+          </div>
+          <div class="form-group">
+            <label for="priority">Priority</label>
+            <select id="priority" name="priority">
+              <option value="Low">Low</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="High">High</option>
+              <option value="Urgent">Urgent</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="requester">Requester</label>
+            <input type="text" id="requester" name="requester">
+          </div>
+          <div class="form-group">
+            <label for="assignee">Assignee</label>
+            <input type="text" id="assignee" name="assignee">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" name="category">
+            <option value="Campaign">Campaign</option>
+            <option value="Report">Report</option>
+            <option value="Fix">Fix</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Item</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Kanban Board View -->
+  <div id="kanbanView" class="kanban-board">
+    <div class="kanban-column" data-status="Not Started">
+      <h3>Not Started</h3>
+      <div class="kanban-items" id="notStarted"></div>
+    </div>
+    <div class="kanban-column" data-status="In Progress">
+      <h3>In Progress</h3>
+      <div class="kanban-items" id="inProgress"></div>
+    </div>
+    <div class="kanban-column" data-status="In Review">
+      <h3>In Review</h3>
+      <div class="kanban-items" id="inReview"></div>
+    </div>
+    <div class="kanban-column" data-status="Done">
+      <h3>Done</h3>
+      <div class="kanban-items" id="done"></div>
+    </div>
+  </div>
+
+  <!-- Table View -->
+  <div id="tableView" class="table-view" style="display: none;">
+    <table>
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th>Description</th>
+          <th>Due Date</th>
+          <th>Progress</th>
+          <th>Priority</th>
+          <th>Requester</th>
+          <th>Assignee</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
